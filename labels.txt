@@ -1,0 +1,9 @@
+train_100_0.jpg Elizabeth
+train_100_1.jpg Mohit 24/06/2001 Migraine
+train_100_10.jpg ollie 24/02/1954 Migrain
+train_100_11.jpg Jomic 25/06/1949 Prostate Cancer
+train_100_12.jpg Emily 27/04/1963 Hypertension
+train_100_13.jpg Mona 28/05/163 High BP
+train_1_0.jpg Anika 15/09/1931 stroke
+train_1_1.jpg Sushma 15/10/1996 Ovarian Cancer
+train_1_2.jpg Ravi 09/05/2021 Breast Cancer
