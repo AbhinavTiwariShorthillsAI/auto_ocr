@@ -46,6 +46,7 @@ coverage.xml
 .pytest_cache/
 
 # Virtual environments
+venv
 venv/
 env/
 ENV/
@@ -59,6 +60,7 @@ venv.bak/
 
 # Data files (don't commit user data or images)
 images/
+images 
 labels.txt
 labels.csv
 *.jpg
