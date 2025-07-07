@@ -1,62 +1,75 @@
-# OCR Labeling Tool
+# 🔤 OCR Labeling Tool
+
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg)](https://reactjs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A full-stack application for semi-automated OCR labeling that extracts text from images using PaddleOCR and provides a clean interface for users to verify and correct the extracted text.
 
-## Features
+## ✨ Features
 
-- **Automated OCR**: Uses PaddleOCR to automatically extract text from images
-- **Interactive UI**: Clean, modern interface built with React and TailwindCSS
-- **Progress Tracking**: Real-time progress bar showing labeling completion
-- **Text Correction**: Easy-to-use interface for correcting OCR results
-- **Auto-advance**: Automatically moves to the next image after saving
-- **Toast Notifications**: User-friendly notifications for all actions
-- **Skip Functionality**: Ability to skip images without labeling
-- **Retry OCR**: Re-run OCR if the initial result is poor
+- **🤖 Automated OCR**: Uses PaddleOCR to automatically extract text from images
+- **💻 Interactive UI**: Clean, modern interface built with React and TailwindCSS
+- **📊 Progress Tracking**: Real-time progress bar showing labeling completion
+- **✏️ Text Correction**: Easy-to-use interface for correcting OCR results
+- **⏭️ Auto-advance**: Automatically moves to the next image after saving
+- **🔔 Toast Notifications**: User-friendly notifications for all actions
+- **⏭️ Skip Functionality**: Ability to skip images without labeling
+- **🔄 Retry OCR**: Re-run OCR if the initial result is poor
 
-## Project Structure
+## 📋 Table of Contents
 
-```
-├── main.py              # FastAPI backend server
-├── requirements.txt     # Python dependencies
-├── test_backend.py      # Backend testing script
-├── images/              # Directory containing images to label (10,000+ images)
-├── labels.txt           # Output file with image-text pairs (text format)
-├── frontend/
-│   ├── public/
-│   │   └── index.html       # HTML template
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── ui/          # Reusable UI components
-│   │   │   └── OCRLabeler.jsx  # Main labeling component
-│   │   ├── hooks/
-│   │   │   └── use-toast.js # Toast notification hook
-│   │   ├── lib/
-│   │   │   └── utils.js     # Utility functions
-│   │   ├── App.js           # Main React component
-│   │   ├── index.js         # React entry point
-│   │   └── index.css        # Global styles
-│   ├── package.json         # Node.js dependencies
-│   ├── tailwind.config.js   # TailwindCSS configuration
-│   └── postcss.config.js    # PostCSS configuration
-└── README.md               # This file
+- [Features](#-features)
+- [Demo](#-demo)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [API Documentation](#-api-documentation)
+- [Output Format](#-output-format)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+- [Troubleshooting](#-troubleshooting)
+- [License](#-license)
+
+## 🎬 Demo
+
+> **Note**: Place your demo images/GIFs here when available
+
+```bash
+# Quick start in 3 commands
+pip install -r requirements.txt
+python main.py &
+cd frontend && npm install && npm start
 ```
 
-## Prerequisites
+## 🚀 Installation
+
+### Prerequisites
 
 - Python 3.8 or higher
 - Node.js 16 or higher
 - npm or yarn
 
-## Installation
-
 ### Backend Setup
 
-1. **Install Python dependencies:**
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/ocr-labeling-tool.git
+   cd ocr-labeling-tool
+   ```
+
+2. **Create a virtual environment (recommended):**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Verify PaddleOCR installation:**
+4. **Verify PaddleOCR installation:**
    ```bash
    python -c "from paddleocr import PaddleOCR; print('PaddleOCR installed successfully')"
    ```
@@ -73,17 +86,20 @@ A full-stack application for semi-automated OCR labeling that extracts text from
    npm install
    ```
 
-## Usage
+## 🎯 Usage
 
 ### 1. Prepare Your Images
 
-Place all the images you want to label in the `images/` directory. The application supports:
+Create an `images/` directory and place all the images you want to label. The application supports:
 - JPG/JPEG
 - PNG
 - BMP
 - TIFF
 
-**Note**: Your `images/` folder already contains 10,000+ images ready for labeling.
+```bash
+mkdir images
+# Copy your images to the images/ directory
+```
 
 ### 2. Start the Backend Server
 
@@ -121,20 +137,55 @@ The frontend will start on `http://localhost:3000` and automatically open in you
 - Counter displays "processed / total images"
 - Toast notifications confirm successful saves
 
-## API Endpoints
+## 📚 API Documentation
 
 The backend provides the following REST API endpoints:
 
 ### GET /api/images/next
 Returns the next unprocessed image and progress information.
 
+**Response:**
+```json
+{
+  "image_name": "train_001.jpg",
+  "image_url": "/images/train_001.jpg",
+  "total_images": 1000,
+  "processed_images": 42
+}
+```
+
 ### POST /api/ocr/file
 Performs OCR on a specific image file.
-- Parameter: `image_name` (string) - Name of the image file
+
+**Parameters:**
+- `image_name` (string) - Name of the image file
+
+**Response:**
+```json
+{
+  "extracted_text": "Hello world",
+  "detailed_results": [...],
+  "success": true,
+  "image_name": "train_001.jpg"
+}
+```
 
 ### POST /api/save
 Saves the corrected text label for an image.
-- Form data: `image_name` (string), `corrected_text` (string)
+
+**Form Data:**
+- `image_name` (string) - Name of the image file
+- `corrected_text` (string) - Corrected text content
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Label saved for train_001.jpg",
+  "image_name": "train_001.jpg",
+  "saved_text": "Hello world"
+}
+```
 
 ### GET /api/images
 Returns overall progress information and image lists.
@@ -142,7 +193,7 @@ Returns overall progress information and image lists.
 ### GET /api/labels
 Returns all saved labels.
 
-## Output Format
+## 📄 Output Format
 
 Labels are saved in `labels.txt` with the following format:
 ```
@@ -158,33 +209,58 @@ train_003.jpg More text content from the image
 - **Encoding**: UTF-8
 - **Text Processing**: Multiple spaces and newlines are normalized to single spaces
 
-**Example Output**:
+## 📁 Project Structure
+
 ```
-train_100_0.jpg KING
-train_100_1.jpg PHONE GAME 
-train_100_10.jpg JOIN CAR
-train_100_11.jpg YEA OPEN COP BOOK
+├── main.py              # FastAPI backend server
+├── requirements.txt     # Python dependencies
+├── test_backend.py      # Backend testing script
+├── labels.txt           # Output file with image-text pairs
+├── images/              # Directory containing images to label
+├── frontend/
+│   ├── public/
+│   │   └── index.html       # HTML template
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── ui/          # Reusable UI components
+│   │   │   └── OCRLabeler.jsx  # Main labeling component
+│   │   ├── hooks/
+│   │   │   └── use-toast.js # Toast notification hook
+│   │   ├── lib/
+│   │   │   └── utils.js     # Utility functions
+│   │   ├── App.js           # Main React component
+│   │   ├── index.js         # React entry point
+│   │   └── index.css        # Global styles
+│   ├── package.json         # Node.js dependencies
+│   ├── tailwind.config.js   # TailwindCSS configuration
+│   └── postcss.config.js    # PostCSS configuration
+├── .gitignore              # Git ignore file
+├── LICENSE                 # MIT License
+└── README.md               # This file
 ```
 
-## Application Status
+## 🤝 Contributing
 
-### ✅ **Fully Operational**
-- Backend server running on port 8000
-- Frontend server running on port 3000  
-- PaddleOCR initialized and working
-- 10,000+ images detected and ready for processing
-- Real-time OCR processing (0.3-0.4 seconds per image)
-- Progress tracking functional
-- Auto-advance after saving
-- Toast notifications working
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### 🎯 **Performance**
-- **OCR Speed**: ~0.3-0.4 seconds per image
-- **Text Detection**: 1-4 text boxes per image typically detected
-- **Memory Usage**: ~2GB RAM for backend with PaddleOCR models loaded
-- **Supported Languages**: English (can be configured for other languages)
+### Development Setup
 
-## Troubleshooting
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes
+4. Run tests: `python test_backend.py`
+5. Commit your changes: `git commit -m 'Add amazing feature'`
+6. Push to the branch: `git push origin feature/amazing-feature`
+7. Open a Pull Request
+
+### Coding Standards
+
+- Follow PEP 8 for Python code
+- Use meaningful variable names
+- Add comments for complex logic
+- Write tests for new features
+
+## 🔧 Troubleshooting
 
 ### Backend Issues
 
@@ -224,7 +300,7 @@ If port 3000 is in use, React will automatically suggest an alternative port.
 - First image may take longer as models initialize
 - Subsequent images should process in ~0.3-0.4 seconds
 
-## Testing the Backend
+## 🧪 Testing
 
 To verify the backend is working correctly:
 ```bash
@@ -244,29 +320,29 @@ Expected output:
    Next image: train_100_0.jpg
 ```
 
-## Technical Details
+## 🏗️ Technical Stack
 
-### Backend Tech Stack
+### Backend
 - **FastAPI**: Modern, fast Python web framework
 - **PaddleOCR**: Powerful OCR library supporting multiple languages
 - **Uvicorn**: ASGI server for running FastAPI
 - **Pillow**: Image processing library
 
-### Frontend Tech Stack
+### Frontend
 - **React**: Modern JavaScript UI library
 - **TailwindCSS**: Utility-first CSS framework
 - **Radix UI**: Accessible component primitives
 - **Lucide React**: Icon library
 - **Axios**: HTTP client for API calls
 
-### Key Features Implementation
-- **Real-time Progress**: Frontend automatically tracks progress
-- **Auto-advance**: Automatically loads next image after saving
-- **Error Handling**: Comprehensive error handling with user feedback
-- **Responsive Design**: Works on desktop and mobile devices
-- **Toast Notifications**: Non-intrusive user feedback
+## 📈 Performance
 
-## Quick Start Summary
+- **OCR Speed**: ~0.3-0.4 seconds per image
+- **Text Detection**: 1-4 text boxes per image typically detected
+- **Memory Usage**: ~2GB RAM for backend with PaddleOCR models loaded
+- **Supported Languages**: English (can be configured for other languages)
+
+## 🎯 Quick Start Summary
 
 1. **Install backend**: `pip install -r requirements.txt`
 2. **Install frontend**: `cd frontend && npm install`
@@ -275,14 +351,19 @@ Expected output:
 5. **Open browser**: Visit `http://localhost:3000`
 6. **Start labeling**: Review OCR results and save corrections!
 
-## Support
+## 📧 Support
 
 For issues or questions:
-1. Check the troubleshooting section above
-2. Verify both backend and frontend servers are running
-3. Check browser console for frontend errors
-4. Check terminal output for backend errors
+1. Check the [troubleshooting section](#-troubleshooting)
+2. Search existing [issues](https://github.com/yourusername/ocr-labeling-tool/issues)
+3. Create a new [issue](https://github.com/yourusername/ocr-labeling-tool/issues/new) if needed
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Status**: ✅ **Ready to use** - Both servers are operational and OCR labeling can begin immediately! 
+**Status**: ✅ **Ready to use** - Both servers are operational and OCR labeling can begin immediately!
+
+Made with ❤️ by the OCR Labeling Tool community 
