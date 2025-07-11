@@ -23,7 +23,7 @@ The Semi-Auto OCR Tool is a full-stack web application designed to streamline th
 ### 2.1 High-Level Architecture
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │    Backend      │    │   File System  │
+│   Frontend      │    │    Backend      │    │   File System   │
 │   (React)       │◄──►│   (FastAPI)     │◄──►│   (Images &     │
 │                 │    │                 │    │    Labels)      │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
@@ -205,21 +205,23 @@ interface FileListResponse {
 ```
 ┌─────────────────────────────────────────┐
 │              Header                     │
-│        OCR Labeling Tool               │
+│        OCR Labeling Tool                │
 ├─────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────────┐   │
 │  │             │  │  Label Input    │   │
 │  │    Image    │  │  ┌───────────┐  │   │
 │  │   Display   │  │  │ Text Area │  │   │
 │  │             │  │  └───────────┘  │   │
-│  └─────────────┘  │  [Save] [OCR]  │   │
+│  └─────────────┘  │  [Save] [OCR]   │   │
 │                   └─────────────────┘   │
 ├─────────────────────────────────────────┤
-│  [◄ Prev] [1/1000] [Progress] [Next ►] │
+│  [◄ Prev] [1/1000] [Progress] [Next ►]  │
 ├─────────────────────────────────────────┤
-│  Jump to: [___] [Go] [Reset All]       │
+│    Jump to: [___] [Go] [Reset All]      │
 └─────────────────────────────────────────┘
 ```
+<img width="1919" height="1015" alt="image" src="https://github.com/user-attachments/assets/6680ee3c-5715-4d34-8f68-25c364dac649" />
+
 
 ### 7.2 Responsive Design
 - **Desktop**: Side-by-side image and label panel
